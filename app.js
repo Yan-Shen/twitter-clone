@@ -22,8 +22,9 @@ app.use(morgan('combined'));
 app.use(express.static('public'))
 
 app.use('/', routes);
-app.get('/user/:id', function (req, res){
+app.get('/:product/:id', function (req, res){
 	console.log(req.params.product +' ' + req.params.id)
+	res.send('done');
 })
 // app.use('/', function(req, res, next) {
 // 	console.log(req.method + ' ' + req.originalUrl);
