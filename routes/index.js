@@ -10,14 +10,18 @@ router.get('/', function (req, res) {
 
 router.get('/users/:name', function(req, res) {
   var name = req.params.name;
-  var list = tweetBank.find( {name: name} );
-  res.render( 'index', { list: list } );
+  console.log(name);
+  var tweets = tweetBank.find( {name: name} );
+  console.log(tweets);
+  res.render( 'index', { tweets: tweets } );
 });
 
 router.get('/tweets/:id', function(req, res){
-  var id = req.params.id;
-  var list = tweetBank.find( {id: id} );
-  res.render( 'index', { list: list } );
+  var id = +req.params.id;
+  console.log(id);
+  var tweets = tweetBank.find( {id: id} );
+  console.log(tweets);
+  res.render( 'index', { tweets: tweets } );
 })
 
 module.exports = router;
