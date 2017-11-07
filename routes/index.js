@@ -13,7 +13,7 @@ router.get('/users/:name', function(req, res) {
   console.log(name);
   var tweets = tweetBank.find( {name: name} );
   console.log(tweets);
-  res.render( 'index', { tweets: tweets } );
+  res.render( 'index', { tweets: tweets, showForm: true } );
 });
 
 router.get('/tweets/:id', function(req, res){
@@ -22,6 +22,14 @@ router.get('/tweets/:id', function(req, res){
   var tweets = tweetBank.find( {id: id} );
   console.log(tweets);
   res.render( 'index', { tweets: tweets } );
-})
+});
+
+router.post('/users/:name', function(req, res) {
+	console.log('you entered the post');
+	tweetBank.add(req.body.name, req.body.text);
+	res.redirect('/');
+});
+
+
 
 module.exports = router;

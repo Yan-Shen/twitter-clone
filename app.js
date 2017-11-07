@@ -3,7 +3,7 @@ const app = express();
 const nunjucks = require('nunjucks');
 const routes = require('./routes');
 var morgan = require('morgan')
-
+var bodyParser = require('body-parser');
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // nunjucks.configure('views', {
 // 	autoescape: true,
@@ -20,6 +20,13 @@ app.listen(3000);
 
 app.use(morgan('combined'));
 app.use(express.static('public'))
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json());
+
 
 app.use('/', routes);
 app.get('/:product/:id', function (req, res){
