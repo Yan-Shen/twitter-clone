@@ -4,6 +4,9 @@ const nunjucks = require('nunjucks');
 const routes = require('./routes');
 var morgan = require('morgan')
 var bodyParser = require('body-parser');
+var socketio = require('socket.io');
+// ...
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // nunjucks.configure('views', {
 // 	autoescape: true,
@@ -16,9 +19,11 @@ app.engine('html', nunjucks.render); // when giving html files to res.render, te
 nunjucks.configure('views'); // point nunjucks to the proper directory for templates
 nunjucks.configure('views', { noCache: true })
 ////////////////////////////////////////////////////////////////////////////////////////////////
-app.listen(3000);
+// app.listen(3000);
+var server = app.listen(3000);
+var io = socketio.listen(server);
 
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 app.use(express.static('public'))
 
 // parse application/x-www-form-urlencoded
@@ -28,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 
-app.use('/', routes);
+app.use('/', routes(io));
 app.get('/:product/:id', function (req, res){
 	console.log(req.params.product +' ' + req.params.id)
 	res.send('done');
